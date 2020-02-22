@@ -18,4 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/forms', 'FormController@index');
+
+Route::get('/cliente', 'ClienteController@index');
+Route::patch('/editar', 'ClienteController@update');
 Route::post('/cadastrar', 'ClienteController@store');

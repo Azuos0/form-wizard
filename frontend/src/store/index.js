@@ -9,6 +9,7 @@ axios.defaults.baseURL = "http://localhost:8000/api";
 
 export default new Vuex.Store({
     state: {
+        clientes:[],
         forms: [],
         formContent: []
     },
@@ -18,6 +19,9 @@ export default new Vuex.Store({
         },
         getFormContent(state) {
             return state.formContent;
+        },
+        getAllClientes(state){
+            return state.clientes;
         }
     },
     mutations: {
@@ -25,10 +29,14 @@ export default new Vuex.Store({
             return state.forms.find(form => form.id === id);
         },
         includeDataContent(state, content) {
+            //problema nessa seção (campo pode ficar com mais de um item)
             state.formContent.push(content);
         },
         retrieveForms(state, data) {
             state.forms = data;
+        },
+        retrieveClientes(state, data) {
+            state.clientes = data;
         },
         constructParams(state, params) {
             state.formContent.forEach(input => {
@@ -42,6 +50,15 @@ export default new Vuex.Store({
             axios.get('/forms')
                 .then(response => {
                     context.commit('retrieveForms', response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        retrieveClientes(context){
+            axios.get('/cliente')
+                .then(response => {
+                    context.commit('retrieveClientes', response.data);
                 })
                 .catch(error => {
                     console.log(error);
