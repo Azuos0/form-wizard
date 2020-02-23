@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\FormContent;
+use App\Profissionais;
 use Faker\Generator as Faker;
 
-$factory->define(FormContent::class, function (Faker $faker) {
+$factory->define(Profissionais::class, function (Faker $faker) {
     return [
         //
     ];

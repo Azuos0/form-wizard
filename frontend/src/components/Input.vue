@@ -10,7 +10,7 @@ export default {
     name: 'input-text',
     data(){
         return{
-            valor: null
+            valor: this.value
         }
     },
     props: {
@@ -18,9 +18,8 @@ export default {
          type: String,
          required: true
      },
-     id:{
-         type:Number,
-         required: true
+     value:{
+         type: String || null,
      }
     },
     methods: {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateValuesTable extends Migration
+class CreateProfissionaisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateValuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('values', function (Blueprint $table) {
+        Schema::create('profissionais', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('valor');
-            $table->unsignedBigInteger('input_id');
-
-            $table->foreign('input_id')->references('id')->on('inputs')->onDelete('cascade');
+            $table->string('nome');
+            $table->string('profissao');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateValuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('values');
+        Schema::dropIfExists('profissionais');
     }
 }

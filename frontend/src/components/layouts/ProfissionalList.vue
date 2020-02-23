@@ -1,33 +1,33 @@
 <template>
   <div>
     <div class="container">
-      <button @click="cadastrar" class="btn btn-primary mb-3 mt-2">Cadastrar Novo Cliente</button>
-      <table v-if="getAllClientes.length > 0" class="table table-striped">
+      <button @click="cadastrar" class="btn btn-primary mb-3 mt-2">Cadastrar Novo Profissional</button>
+      <table v-if="getAllProfissionais.length > 0" class="table table-striped">
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nome</th>
-            <th scope="col">Sexo</th>
+            <th scope="col">Profissão</th>
             <th scope="col">Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="cliente in getAllClientes" :key="cliente.id">
-            <th scope="row">{{cliente.id}}</th>
-            <td>{{cliente.nome}}</td>
-            <td>{{cliente.sexo}}</td>
+          <tr v-for="profissional in getAllProfissionais" :key="profissional.id">
+            <th scope="row">{{profissional.id}}</th>
+            <td>{{profissional.nome}}</td>
+            <td>{{profissional.profissao}}</td>
             <td>
-              <button @click="editar(cliente)" class="btn btn-outline-success mr-2">
+              <button @click="editar(profissional)" class="btn btn-outline-success mr-2">
                 <b-icon icon="pencil"></b-icon>
               </button>
-              <button @click="deletar(cliente.id)" class="btn btn-outline-danger">
+              <button @click="deletar(profissional.id)" class="btn btn-outline-danger">
                 <b-icon icon="trash"></b-icon>
               </button>
             </td>
           </tr>
         </tbody>
       </table>
-      <h2 v-else>Não há usuários cadastrados</h2>
+      <h2 v-else>Não há profissionais cadastrados</h2>
     </div>
   </div>
 </template>
@@ -36,19 +36,19 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "client-list",
+  name: "profissional-list",
   computed: {
-    ...mapGetters(["getAllClientes"])
+    ...mapGetters(["getAllProfissionais"])
   },
   methods: {
     cadastrar() {
       this.$store.commit("instantiateForm", {
-        form: "Formulário do Cliente",
+        form: "Formulário do Profissional",
         formHeader: "Cadastrar",
-        mutation: "addCliente",
-        backPage: "clientes",
+        mutation: "addProfissional",
+        backPage: "profissionais",
       });
-      this.$router.push({ name: "cadastrarCliente" });
+      this.$router.push({ name: "cadastrarProfissional" });
     },
     editar(cliente) {
       //cria um object input sem a chave id
@@ -60,19 +60,19 @@ export default {
       }, {});
 
       this.$store.commit("instantiateForm", {
-        form: "Formulário do Cliente",
+        form: "Formulário do Profissional",
         formHeader: "Editar",
-        mutation: "editCliente",
-        backPage: "home",
+        mutation: "editProfissional",
+        backPage: "profissionais",
         inputValues: inputs
       });
 
       this.$store.commit("includeEditContentData", inputs);
 
-      this.$router.push({ name: "editarCliente", params: { id: cliente.id } });
+      this.$router.push({ name: "editarProfissional", params: { id: cliente.id } });
     },
     deletar(id) {
-      this.$store.dispatch("deleteCliente", id);
+      this.$store.dispatch("deleteProfissional", id);
     }
   }
 };

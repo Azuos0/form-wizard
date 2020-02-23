@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Value;
+use App\ContentHeader;
 use Illuminate\Http\Request;
 
-class ValueController extends Controller
+class ContentHeaderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ValueController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Value  $value
+     * @param  \App\ContentHeader  $contentHeader
      * @return \Illuminate\Http\Response
      */
-    public function show(Value $value)
+    public function show(ContentHeader $contentHeader)
     {
         //
     }
@@ -52,10 +52,10 @@ class ValueController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Value  $value
+     * @param  \App\ContentHeader  $contentHeader
      * @return \Illuminate\Http\Response
      */
-    public function edit(Value $value)
+    public function edit(ContentHeader $contentHeader)
     {
         //
     }
@@ -64,10 +64,10 @@ class ValueController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Value  $value
+     * @param  \App\ContentHeader  $contentHeader
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Value $value)
+    public function update(Request $request, ContentHeader $contentHeader)
     {
         //
     }
@@ -75,10 +75,10 @@ class ValueController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Value  $value
+     * @param  \App\ContentHeader  $contentHeader
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Value $value)
+    public function destroy(ContentHeader $contentHeader)
     {
         //
     }

@@ -17,8 +17,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//forms 
 Route::get('/forms', 'FormController@index');
 
+//clientes
 Route::get('/cliente', 'ClienteController@index');
-Route::patch('/editar', 'ClienteController@update');
 Route::post('/cadastrar', 'ClienteController@store');
+Route::patch('/editar/{cliente}', 'ClienteController@update');
+Route::delete('deletar/{cliente}','ClienteController@destroy');
+
+//profissionais
+Route::get('/profissionais', 'ProfissionaisController@index');
+Route::post('/cadastrarProfissional', 'ProfissionaisController@store');
+Route::patch('/editarProfissional/{profissional}', 'ProfissionaisController@update');
+Route::delete('deletarProfissional/{profissional}','ProfissionaisController@destroy');

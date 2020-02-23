@@ -1,12 +1,9 @@
 <template>
   <div id="app">
     <ul class="nav">
-      <li>
-        <router-link :to="{name: 'home'}" class="link">Home</router-link>
-      </li>
-      <li>
-        <router-link :to="{name: 'cadastrar'}" class="link">Cadastrar</router-link>
-      </li>
+      <li><router-link :to="{name: 'home'}" class="link">Home</router-link></li>
+      <li><router-link :to="{name: 'clientes'}" class="link">Clientes</router-link></li>
+      <li><router-link :to="{name: 'profissionais'}" class="link">Profissionais</router-link></li>
     </ul>
     <img alt="Vue logo" src="./assets/logo.png" />
 
@@ -20,6 +17,7 @@ export default {
   created() {
     this.$store.dispatch("retrieveForms");
     this.$store.dispatch("retrieveClientes");
+    this.$store.dispatch("retrieveProfissionais");
   }
 };
 </script>
@@ -45,7 +43,8 @@ export default {
 
 .nav li {
   display: inline;
-  padding: 8px;
+  padding: 8px; 
+  text-decoration: none;
 }
 
 .link {
@@ -53,9 +52,11 @@ export default {
   text-decoration: none;
   font-size: 14px;
   text-transform: uppercase;
+
 }
 
 .nav li:hover {
   background-color: #111;
+  text-decoration: none;
 }
 </style>

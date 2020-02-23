@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <select @change="adicionarValor" v-model="valor" class="form-control" id="exampleFormControlSelect1" :name="this.nome">
-      <option v-for="(valor, index) in valores" :key="index">{{valor.valor}}</option>
+      <option v-for="(option, index) in options" :key="index">{{option.valor}}</option>
     </select>
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
     name: 'input-select',
     data(){
         return{
-            valor: null
+            valor: this.value
         }
     },
     props: {
@@ -19,14 +19,13 @@ export default {
          type: String,
          required: true
      },
-     valores:{
+     options:{
          type: Array,
          required: true
      },
-     id:{
-         type: Number,
-         required: true
-     }   
+     value:{
+         type:String || null
+     }
     },
     methods:{
         adicionarValor(){

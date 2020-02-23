@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\FormContent;
+use App\Options;
 use Illuminate\Http\Request;
 
-class FormContentController extends Controller
+class OptionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class FormContentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\FormContent  $formContent
+     * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function show(FormContent $formContent)
+    public function show(Options $options)
     {
         //
     }
@@ -52,10 +52,10 @@ class FormContentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\FormContent  $formContent
+     * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormContent $formContent)
+    public function edit(Options $options)
     {
         //
     }
@@ -64,10 +64,10 @@ class FormContentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\FormContent  $formContent
+     * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FormContent $formContent)
+    public function update(Request $request, Options $options)
     {
         //
     }
@@ -75,10 +75,10 @@ class FormContentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\FormContent  $formContent
+     * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FormContent $formContent)
+    public function destroy(Options $options)
     {
         //
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Cliente;
+use App\Profissionais;
 use Illuminate\Http\Request;
 
-class ClienteController extends Controller
+class ProfissionaisController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        return Cliente::all();
+        return Profissionais::all();
     }
 
     /**
@@ -27,43 +27,44 @@ class ClienteController extends Controller
     {
         $data = $request->validate([
             'nome' => 'required|string|min:1',
-            'sexo' => 'required|string'
+            'profissao' => 'required|string|min:1'
         ]);
 
-        $cliente = Cliente::create($data);
+        $profissional = Profissionais::create($data);
 
-        return response($cliente, 201);
+        return response($profissional, 201);
     }
+
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cliente  $cliente
+     * @param  \App\Profissionais  $profissionais
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, Profissionais $profissional)
     {
         $data = $request->validate([
             'nome' => 'required|string|min:1',
-            'sexo' => 'required|string'
+            'profissao' => 'required|string|min:1'
         ]);
 
-        $cliente->update($data);
+        $profissional->update($data);
 
-        return response($cliente, 201);
+        return response($profissional, 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cliente  $cliente
+     * @param  \App\Profissionais  $profissionais
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente $cliente)
+    public function destroy(Profissionais $profissional)
     {
-         $cliente->delete();
+        $profissional->delete();
 
-        return response("Cliente excluído com sucesso", 200);
+        return response("Profissional excluído com sucesso", 200);
     }
 }

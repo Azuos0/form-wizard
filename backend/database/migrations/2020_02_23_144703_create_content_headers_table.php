@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInputsTable extends Migration
+class CreateContentHeadersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateInputsTable extends Migration
      */
     public function up()
     {
-        Schema::create('inputs', function (Blueprint $table) {
+        Schema::create('content_headers', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('url');
             $table->string('nome');
-            $table->string('tipo');
-            $table->string('label');
-            // $table->string('valor');
+            $table->string('method');
             $table->unsignedBigInteger('form_id');
 
             $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
@@ -32,6 +31,6 @@ class CreateInputsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inputs');
+        Schema::dropIfExists('content_headers');
     }
 }

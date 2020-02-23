@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class FormContentSeeder extends Seeder
+class OptionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.

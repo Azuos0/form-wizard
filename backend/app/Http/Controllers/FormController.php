@@ -28,18 +28,8 @@ class FormController extends Controller
     public function index()
     {
         // return $this->form->inputs()->get();
-        return Form::with('inputs')->with('inputs.values')->get();
+        return Form::with('headers')->with('inputs')->with('inputs.options')->get();
         // return Form::get()->with('inputs');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -49,28 +39,6 @@ class FormController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Form  $form
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Form $form)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Form  $form
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Form $form)
     {
         //
     }

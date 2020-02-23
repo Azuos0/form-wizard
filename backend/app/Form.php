@@ -14,4 +14,9 @@ class Form extends Model
     {
         return $this->hasMany('App\Input', 'form_id', 'id');
     }
+
+    public function headers()
+    {
+        return $this->hasMany('App\ContentHeader', 'form_id', 'id');
+    }
 }
