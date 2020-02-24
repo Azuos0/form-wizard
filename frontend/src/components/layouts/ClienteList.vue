@@ -42,34 +42,11 @@ export default {
   },
   methods: {
     cadastrar() {
-      this.$store.commit("instantiateForm", {
-        form: "Formulário do Cliente",
-        formHeader: "Cadastrar",
-        mutation: "addCliente",
-        backPage: "clientes",
-      });
-      this.$router.push({ name: "cadastrarCliente" });
+      this.$router.push({ name: "cadastrarCliente", query:{form:0}});
     },
     editar(cliente) {
-      //cria um object input sem a chave id
-      const inputs = Object.keys(cliente).reduce((object, key) => {
-        if (key !== 'id') {
-          object[key] = cliente[key];
-        }
-        return object;
-      }, {});
-
-      this.$store.commit("instantiateForm", {
-        form: "Formulário do Cliente",
-        formHeader: "Editar",
-        mutation: "editCliente",
-        backPage: "clientes",
-        inputValues: inputs
-      });
-
-      this.$store.commit("includeEditContentData", inputs);
-
-      this.$router.push({ name: "editarCliente", params: { id: cliente.id } });
+      this.$store.commit("includeEditContentData", cliente);
+      this.$router.push({ name: "editarCliente", params: { id: cliente.id }, query:{form:1} });
     },
     deletar(id) {
       this.$store.dispatch("deleteCliente", id);

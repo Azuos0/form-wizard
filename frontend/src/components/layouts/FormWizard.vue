@@ -14,7 +14,7 @@
                   :is="input.tipo"
                   :nome="input.nome"
                   :options="input.options"
-                  :value="inputValue? inputValue[input.nome] : null"
+                  :value="getFormContent? getFormContent[input.nome] : null"
                   :id="input.id"
                 ></component>
                 <hr />
@@ -41,8 +41,16 @@ export default {
   name: "form-wizard",
   data() {
     return {
-      // cliente: this.$route.params.id
+      form: {},
+      formHeader: {},
     };
+  },
+  mounted(){
+    this.instantiateForm();
+  },
+  beforeDestroy(){
+    this.$store.commit('clearFormContent');
+    this.$store.commit('clearSelectedOption');
   },
   components: {
     inputDate,
@@ -51,19 +59,6 @@ export default {
   },
   computed: {
     ...mapGetters(["getAllForms", "getFormContent", "getFormSelectedInfo"]),
-    form() {
-      const form = this.getAllForms.find(form => form.nome.toLowerCase() === this.getFormSelectedInfo.form.toLowerCase())
-      return form;
-    },
-    formHeader(){
-      return this.form.headers.find(header => 
-        header.nome.toLowerCase() === this.getFormSelectedInfo.formHeader.toLowerCase()
-      );
-    },
-    inputValue(){
-      const dados = this.getFormSelectedInfo.inputValues ? this.getFormSelectedInfo.inputValues : null;
-      return dados;
-    }
   },
   methods: {
     submitForm() {
@@ -76,6 +71,15 @@ export default {
       }).then(() => {
         this.$router.push({name:this.getFormSelectedInfo.backPage});
       });
+    },
+    instantiateForm(){
+      this.$store.dispatch('instantiateForm', this.$route.query.form)
+      .then(() => {
+        this.form = this.getAllForms.find(form => form.nome.toLowerCase() === this.getFormSelectedInfo.form.toLowerCase())
+        this.formHeader = this.form.headers.find(header => 
+          header.nome.toLowerCase() === this.getFormSelectedInfo.formHeader.toLowerCase()
+        );
+      })
     }
   }
 };

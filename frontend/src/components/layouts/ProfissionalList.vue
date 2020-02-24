@@ -42,34 +42,13 @@ export default {
   },
   methods: {
     cadastrar() {
-      this.$store.commit("instantiateForm", {
-        form: "Formulário do Profissional",
-        formHeader: "Cadastrar",
-        mutation: "addProfissional",
-        backPage: "profissionais",
-      });
-      this.$router.push({ name: "cadastrarProfissional" });
+      this.$router.push({ name: "cadastrarProfissional", query:{form:2} });
     },
-    editar(cliente) {
-      //cria um object input sem a chave id
-      const inputs = Object.keys(cliente).reduce((object, key) => {
-        if (key !== 'id') {
-          object[key] = cliente[key];
-        }
-        return object;
-      }, {});
+    editar(profissional) {
 
-      this.$store.commit("instantiateForm", {
-        form: "Formulário do Profissional",
-        formHeader: "Editar",
-        mutation: "editProfissional",
-        backPage: "profissionais",
-        inputValues: inputs
-      });
+      this.$store.commit("includeEditContentData", profissional);
 
-      this.$store.commit("includeEditContentData", inputs);
-
-      this.$router.push({ name: "editarProfissional", params: { id: cliente.id } });
+      this.$router.push({ name: "editarProfissional", params: { id: profissional.id }, query:{form:3} });
     },
     deletar(id) {
       this.$store.dispatch("deleteProfissional", id);

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Bem vindo ao form-wizard</h1>
+        <h1>Bem vindo ao Form Wizard</h1>
     </div>
 </template>
 

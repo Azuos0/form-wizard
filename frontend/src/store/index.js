@@ -9,11 +9,41 @@ axios.defaults.baseURL = "http://localhost:8000/api";
 
 export default new Vuex.Store({
     state: {
-        clientes: [],
-        profissionais: [],
-        forms: [],
-        formContent: {},
-        formSelectedInfo: {}
+        clientes: [], //array com os clientes vindos do BD
+        profissionais: [], //array com os profissionais vindos do BD
+        forms: [], //arrays com os formulários vindos do BD
+        formContent: {}, //conteúdo dos inputs do formulário
+        formSelectedInfo: {}, //formulário que será montado (ex: form do cliente com o header cadastrar) 
+
+        //array com as possíveis configurações dos formulários 
+        //(um desses objetos deve ser inserido no formSelectInfo para que ele monte o formulário)
+        formOptions: [
+            {//Configuração para a criação do form de cadastrar cliente
+                form: "Formulário do Cliente",
+                formHeader: "Cadastrar",
+                mutation: "addCliente",
+                backPage: "clientes",
+            },
+            {//Configuração para a criação do form de editar cliente
+                form: "Formulário do Cliente",
+                formHeader: "Editar",
+                mutation: "editCliente",
+                backPage: "clientes",
+            },
+            {//Configuração para a criação do form de cadastrar profissional
+                form: "Formulário do Profissional",
+                formHeader: "Cadastrar",
+                mutation: "addProfissional",
+                backPage: "profissionais",
+            },
+            {//Configuração para a criação do form de editar profissional
+                form: "Formulário do Profissional",
+                formHeader: "Editar",
+                mutation: "editProfissional",
+                backPage: "profissionais",
+            },
+        ]
+
     },
     getters: {
         getAllForms(state) {
@@ -28,7 +58,7 @@ export default new Vuex.Store({
         getAllProfissionais(state) {
             return state.profissionais;
         },
-        getFormSelectedInfo(state){
+        getFormSelectedInfo(state) {
             return state.formSelectedInfo;
         }
     },
@@ -37,31 +67,43 @@ export default new Vuex.Store({
         getForm(state, id) {
             return state.forms.find(form => form.id === id);
         },
+        //recebe o nome do input e o valor (feito durante o preenchimento do formulário)
         includeDataContent(state, input) {
             state.formContent[input.nome] = input.valor;
         },
-        includeEditContentData(state, data){
-            state.formContent = data;
+        //recebe o objeto (cliente ou profissional) e exclui o id (feito antes de carregar o formulário)
+        includeEditContentData(state, content) {
+            //cria um object input sem a chave id
+            const inputs = Object.keys(content).reduce((object, key) => {
+                if (key !== 'id') {
+                    object[key] = content[key];
+                }
+                return object;
+            }, {});
+            state.formContent = inputs;
         },
         retrieveForms(state, data) {
             state.forms = data;
         },
-        instantiateForm(state, dados){
-            state.formSelectedInfo = dados;
+        instantiateForm(state, formOption) {
+            state.formSelectedInfo = state.formOptions[formOption];
         },
         clearFormContent(state) {
             state.formContent = {};
         },
+        clearSelectedOption(state) {
+            state.formSelectedInfo = {};
+        },
 
         // Métodos relacionados aos clientes ///
-        getCliente(state, id){
-            return state.clientes.find(cliente =>cliente.id === id);
+        getCliente(state, id) {
+            return state.clientes.find(cliente => cliente.id === id);
         },
-        addCliente(state, cliente){
+        addCliente(state, cliente) {
             const objectLenght = Object.keys(state.clientes).length;
             state.clientes[objectLenght] = cliente;
         },
-        editCliente(state, cliente){
+        editCliente(state, cliente) {
             const index = state.clientes.findIndex(item => item.id == cliente.id);
             state.clientes.splice(index, 1, cliente);
         },
@@ -74,14 +116,14 @@ export default new Vuex.Store({
         },
 
         //métodos relacionados aos profissionais //
-        getProfissional(state, id){
-            return state.profissionais.find(cliente =>cliente.id === id);
+        getProfissional(state, id) {
+            return state.profissionais.find(cliente => cliente.id === id);
         },
-        addProfissional(state, profissional){
+        addProfissional(state, profissional) {
             const objectLenght = Object.keys(state.profissionais).length;
             state.profissionais[objectLenght] = profissional;
         },
-        editProfissional(state, profissional){
+        editProfissional(state, profissional) {
             const index = state.profissionais.findIndex(item => item.id == profissional.id);
             state.profissionais.splice(index, 1, profissional);
         },
@@ -123,21 +165,22 @@ export default new Vuex.Store({
         },
         submitForm(context, config) {
             //Axios é configurado de acordo ao form
-            return new Promise((resolve, reject)=> {
+            console.log(config);
+            return new Promise((resolve, reject) => {
                 axios({
                     method: config.method.toLowerCase(),
                     url: config.action,
                     data: this.state.formContent
                 })
-                .then((response) => {
-                    context.commit(config.mutation, response.data);
-                    context.commit('clearFormContent');
-                    resolve(response);
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                });
+                    .then((response) => {
+                        context.commit(config.mutation, response.data);
+                        context.commit('clearFormContent');
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject(error);
+                    });
             });
         },
         deleteCliente(context, id) {
@@ -159,6 +202,25 @@ export default new Vuex.Store({
                 .catch(error => {
                     console.log(error);
                 });
-        }
+        },
+        instantiateForm(context, form) {
+            if (this.state.forms.length > 0) {
+                context.commit('instantiateForm', form)
+            }
+            else {
+                return new Promise((resolve, reject) => {
+                    axios.get('/forms')
+                        .then(response => {
+                            context.commit('retrieveForms', response.data);
+                            context.commit('instantiateForm', form);
+                            resolve(response);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject(error);
+                        });
+                });
+            }
+        },
     }
 });
