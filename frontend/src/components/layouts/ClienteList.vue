@@ -63,7 +63,7 @@ export default {
         form: "Formulário do Cliente",
         formHeader: "Editar",
         mutation: "editCliente",
-        backPage: "home",
+        backPage: "clientes",
         inputValues: inputs
       });
 
